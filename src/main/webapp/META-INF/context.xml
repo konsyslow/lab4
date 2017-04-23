@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/stc05students">
+    <Resource
+            driverClassName="oracle.jdbc.driver.OracleDriver"
+            maxActive="4"
+            maxIdle="2"
+            maxWait="5000"
+            name="jdbc/StudentsDS"
+            username="system"
+            password="system"
+            type="javax.sql.DataSource"
+            url="jdbc:oracle:thin:@localhost:1521:xe">
+    </Resource>
+</Context>
