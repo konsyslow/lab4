@@ -44,6 +44,10 @@ public class Users {
         isBlocked = blocked;
     }
 
+    public int getIsBlocked() {
+        return isBlocked;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }

@@ -2,10 +2,7 @@ package main.model.dao;
 
 import main.model.pojo.Publications;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,10 +101,10 @@ public class PublicationsDaoImpl implements PublicationsDao {
         }
     }
 
-    public void deletePublication(Publications publication) {
+    public void deletePublication(Integer id) {
         PreparedStatement preparedStatement = getPrepareStatement(DELETE_PUBLICATION);
         try {
-            preparedStatement.setLong(1, publication.getId());
+            preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException e){
             e.printStackTrace();
@@ -115,4 +112,23 @@ public class PublicationsDaoImpl implements PublicationsDao {
             closePrepareStatement(preparedStatement);
         }
     }
+
+    public Publications get(Integer user_id) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM PUBLICATIONS WHERE user_id = " + user_id.toString());
+            while (result.next()) {
+                Publications m = new Publications(result.getInt("id"), result.getInt("user_id"),
+                        result.getString("name"),result.getString("genre"));
+                return m;
+            }
+        } catch (SQLException e) {
+            // Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
+            e.printStackTrace();
+            //IProLogger.LOGGER.error(e.getClass().getSimpleName() + ": " + e.getMessage());
+        }
+        return null;
+    }
+
+
 }

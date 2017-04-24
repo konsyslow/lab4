@@ -13,11 +13,10 @@
     <title>List</title>
 </head>
 <body>
-<% String message = (String) request.getAttribute("value");%>
+<% String message = (String) request.getAttribute("value");%> <a href='logout.jsp'>Log out</a>
 <h1>
-    <%=message%>
+    <%=message%> <%=session.getAttribute("userLogin")%>
 </h1>
-
  <table border="1">
         <thead>
         <tr>

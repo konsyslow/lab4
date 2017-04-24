@@ -23,7 +23,7 @@ public class ListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setAttribute("value", "Hello, admin");
+        req.setAttribute("value", "Hello, ");
 
         List<UsersInformation> usersInformations = service.getAll();
 //        Student student1 = new Student(1,"Vasya", 12,1);

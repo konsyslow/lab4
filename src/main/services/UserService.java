@@ -26,7 +26,9 @@ public class UserService implements UserServiceInterface {
     }
 
     public void insert(String login, String password){
-        userDAO.insertUser(login, password);
+        //Users users = new Users();
+        Users user = new Users( 0,  login,  password,  0);
+        userDAO.insertUser(user);
     }
 
     public List<Users> getAll(){

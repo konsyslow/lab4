@@ -56,13 +56,14 @@ private static final Logger LOGGER = Logger.getLogger(UserDAOImpl.class);
     }
 
 
-    public void insertUser(String login, String password) {
+    //public void insertUser(String login, String password) {
+    public void insertUser(Users user) {
         PreparedStatement preparedStatement = getPrepareStatement(INSERT_USERS);
         try {
             //preparedStatement.setLong(1, usersInformation.getId());
-            preparedStatement.setString(1, login);
-            preparedStatement.setString(2, password);
-            preparedStatement.setLong(3, 0);
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setLong(3, user.getIsBlocked());
             preparedStatement.executeUpdate();
             closePrepareStatement(preparedStatement);
         } catch (SQLException e) {

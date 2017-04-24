@@ -22,8 +22,8 @@
     <servlet-class>main.controllers.ListController</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>UsersInformationServlet</servlet-name>
-    <servlet-class>main.controllers.UsersInformationServlet</servlet-class>
+    <servlet-name>PublicationsServlet</servlet-name>
+    <servlet-class>main.controllers.PublicationsServlet</servlet-class>
   </servlet>
   <filter>
     <filter-name>WhiteFilter</filter-name>
@@ -57,8 +57,8 @@
     <url-pattern>/listUsers</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>UsersInformationServlet</servlet-name>
-    <url-pattern>/usersInformation</url-pattern>
+    <servlet-name>PublicationsServlet</servlet-name>
+    <url-pattern>/publications</url-pattern>
   </servlet-mapping>
   <resource-ref>
     <description>DB Connection</description>
