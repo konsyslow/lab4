@@ -7,7 +7,7 @@ public class Users {
     private long id;
     private String login;
     private String password;
-    public int isBlocked;
+    private int isBlocked;
 
     public Users(long id, String login, String password, int isBlocked) {
         this.id = id;
@@ -44,9 +44,9 @@ public class Users {
         isBlocked = blocked;
     }
 
-    public int getIsBlocked() {
-        return isBlocked;
-    }
+   // public int getIsBlocked() {
+//        return isBlocked;
+//    }
 
     public void setPassword(String password) {
         this.password = password;

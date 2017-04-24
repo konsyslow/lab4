@@ -13,7 +13,7 @@
     <title>Registration</title>
 </head>
 <body>
-<form method="post" action="${pageContext.request.contextPath}/">
+<form method="post" action="RegistrationServlet">
     <center>
         <table border="1" width="30%" cellpadding="5">
             <thead>

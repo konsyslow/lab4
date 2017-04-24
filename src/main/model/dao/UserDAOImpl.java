@@ -12,10 +12,10 @@ import java.util.List;
  * Created by admin on 20.04.2017.
  */
 public class UserDAOImpl implements UserDAO {
-//    static{
-//        PropertyConfigurator.configure("lo4j.properties");
-//    }
-private static final Logger LOGGER = Logger.getLogger(UserDAOImpl.class);
+    static{
+        PropertyConfigurator.configure("C:\\Users\\admin\\Documents\\lab3_Suslov_KV\\lab3\\lo4j.properties");
+    }
+//private static final Logger LOGGER = Logger.getLogger(UserDAOImpl.class);
     private Connection connection;
     // private ConnectionPool connectionPool;
 
@@ -63,12 +63,12 @@ private static final Logger LOGGER = Logger.getLogger(UserDAOImpl.class);
             //preparedStatement.setLong(1, usersInformation.getId());
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setLong(3, user.getIsBlocked());
+            preparedStatement.setLong(3, user.isBlocked());
             preparedStatement.executeUpdate();
             closePrepareStatement(preparedStatement);
         } catch (SQLException e) {
-            LOGGER.error("insertUser",e);
-            //Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
+            //LOGGER.error("insertUser",e);
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
             e.printStackTrace();
         }
     }

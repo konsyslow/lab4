@@ -14,6 +14,9 @@
     <servlet-class>main.controllers.LoginServlet</servlet-class>
   </servlet>
   <servlet>
+    <description>
+    </description>
+    <display-name>RegistrationServlet</display-name>
     <servlet-name>RegistrationServlet</servlet-name>
     <servlet-class>main.controllers.RegistrationServlet</servlet-class>
   </servlet>
@@ -50,7 +53,7 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>RegistrationServlet</servlet-name>
-    <url-pattern>/reg/</url-pattern>
+    <url-pattern>/RegistrationServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ListServlet</servlet-name>
