@@ -1,5 +1,6 @@
 package main.services;
 
+import main.model.connection.ManagementSystem;
 import main.model.dao.UserDAO;
 import main.model.dao.UserDAOImpl;
 import main.model.pojo.Users;
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by admin on 20.04.2017.
  */
 public class UserService implements UserServiceInterface {
-    private static UserDAO userDAO = new UserDAOImpl(ManagementSystem.getCon());
+    private static UserDAO userDAO = new UserDAOImpl();
 
     public Users auth(String login, String password) {
         Users user = userDAO.findUserByLoginAndPassword(login, password);

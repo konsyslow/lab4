@@ -12,5 +12,5 @@ public interface PublicationsDao {
     List<Publications> getAll();
     void updatePublication(Publications publication);
     void deletePublication(Integer id);
-    Publications get(Integer user_id);
+    Publications getByUserId(Integer user_id);
 }

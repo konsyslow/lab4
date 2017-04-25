@@ -45,7 +45,7 @@
 
   <servlet-mapping>
     <servlet-name>HelloServlet</servlet-name>
-    <url-pattern>/hello</url-pattern>
+    <url-pattern>/welcome</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
@@ -53,7 +53,7 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>RegistrationServlet</servlet-name>
-    <url-pattern>/RegistrationServlet</url-pattern>
+    <url-pattern>/Registration</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ListServlet</servlet-name>

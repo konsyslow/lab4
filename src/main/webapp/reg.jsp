@@ -13,7 +13,7 @@
     <title>Registration</title>
 </head>
 <body>
-<form method="post" action="RegistrationServlet">
+<form method="post" action="Registration">
     <center>
         <table border="1" width="30%" cellpadding="5">
             <thead>

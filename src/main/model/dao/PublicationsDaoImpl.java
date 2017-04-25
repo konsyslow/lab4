@@ -1,6 +1,7 @@
 package main.model.dao;
 
 import main.model.pojo.Publications;
+import main.model.connection.ManagementSystem;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,24 +12,22 @@ import java.util.List;
  */
 public class PublicationsDaoImpl implements PublicationsDao {
 
-    private Connection connection;
+    //private Connection connection;
     //private ConnectionPool connectionPool;
 
     public static final String SELECT_ALL_PUBLICATIONS = "SELECT * FROM PUBLICATIONS";
     public static final String INSERT_PUBLICATIONS = "INSERT INTO PUBLICATIONS (id, user_id, name, genre) VALUES (?,?,?,?)";
     public static final String UPDATE_PUBLICATIONS = "UPDATE PUBLICATIONS SET user_id=? name=? genre=? WHERE id=?";
     public static final String DELETE_PUBLICATION = "DELETE FROM PUBLICATIONS WHERE id=?";
+    public static final String GET_BY_USER_ID = "SELECT * FROM PUBLICATIONS where user_id = ?";
 
-    public PublicationsDaoImpl(Connection connection){//, ConnectionPool connectionPool) {
-        this.connection = connection;
-        //this.connectionPool = connectionPool;
-    }
-
-    public void returnConnectionInPool() {
-        //connectionPool.returnConnection(connection);
-    }
+//    public PublicationsDaoImpl(Connection connection){//, ConnectionPool connectionPool) {
+//        this.connection = connection;
+//        //this.connectionPool = connectionPool;
+//    }
 
     public PreparedStatement getPrepareStatement(String sql) {
+        Connection connection = ManagementSystem.getCon();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement(sql);
@@ -55,11 +54,12 @@ public class PublicationsDaoImpl implements PublicationsDao {
         try {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                Publications publication = new Publications();
-                publication.setId(rs.getInt(1));
-                publication.setUser_id(rs.getInt(2));
-                publication.setName(rs.getString(3));
-                publication.setGenre(rs.getString(4));
+                Publications publication = new Publications(rs.getInt(1), rs.getInt(2),
+                        rs.getString(3), rs.getString(4) );
+//                publication.setId(rs.getInt(1));
+//                publication.setUser_id(rs.getInt(2));
+//                publication.setName(rs.getString(3));
+//                publication.setGenre(rs.getString(4));
                 list.add(publication);
             }
         } catch (SQLException e) {
@@ -113,14 +113,15 @@ public class PublicationsDaoImpl implements PublicationsDao {
         }
     }
 
-    public Publications get(Integer user_id) {
+    public Publications getByUserId(Integer user_id) {
+        PreparedStatement preparedStatement = getPrepareStatement(GET_BY_USER_ID);
         try {
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM PUBLICATIONS WHERE user_id = " + user_id.toString());
-            while (result.next()) {
-                Publications m = new Publications(result.getInt("id"), result.getInt("user_id"),
-                        result.getString("name"),result.getString("genre"));
-                return m;
+            preparedStatement.setInt(1, user_id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Publications publication = new Publications(rs.getInt("id"), rs.getInt("user_id"),
+                        rs.getString("name"),rs.getString("genre"));
+                return publication;
             }
         } catch (SQLException e) {
             // Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);

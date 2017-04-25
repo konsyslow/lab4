@@ -1,9 +1,7 @@
 package main.model.dao;
 
 import main.model.pojo.UsersInformation;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+import main.model.connection.ManagementSystem;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +15,7 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
 //        PropertyConfigurator.configure("lo4j.properties");
 //    }
 
-    private Connection connection;
+    //private Connection connection;
    // private ConnectionPool connectionPool;
 
     public static final String SELECT_ALL_USERSINFORMATION = "SELECT * FROM USERS_INFORMATION";
@@ -26,19 +24,15 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
     public static final String UPDATE_USERSINFORMATION = "UPDATE USERS_INFORMATION SET " +
             "firstname=?, secondname=?, lastname=? WHERE id=?";
     public static final String DELETE_USERSINFORMATION = "DELETE FROM USERS_INFORMATION WHERE id=?";
+    public static final String GET_BY_ID = "SELECT * FROM USERS_INFORMATION where id = ?";
 
-    public UsersInformationDaoImpl(Connection connection){//}, ConnectionPool connectionPool) {
-        this.connection = connection;
-        //this.connectionPool = connectionPool;
-    }
+//    public UsersInformationDaoImpl(Connection connection){//}, ConnectionPool connectionPool) {
+//        this.connection = connection;
+//        //this.connectionPool = connectionPool;
+//    }
 
-    public void returnConnectionInPool() {
-
-        //connectionPool.returnConnection(connection);
-    }
-
-    // Получение экземпляра PrepareStatement
     public PreparedStatement getPrepareStatement(String sql) {
+        Connection connection = ManagementSystem.getCon();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement(sql);
@@ -50,7 +44,6 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
         return ps;
     }
 
-    // Закрытие PrepareStatement
     public void closePrepareStatement(PreparedStatement ps) {
         if (ps != null) {
             try {
@@ -68,11 +61,12 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
         try {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                UsersInformation usersInformation = new UsersInformation();
-                usersInformation.setId(rs.getInt(1));
-                usersInformation.setFirstName(rs.getString(2));
-                usersInformation.setSecondName(rs.getString(3));
-                usersInformation.setLastName(rs.getString(4));
+                UsersInformation usersInformation = new UsersInformation(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4));
+//                usersInformation.setId(rs.getInt(1));
+//                usersInformation.setFirstName(rs.getString(2));
+//                usersInformation.setSecondName(rs.getString(3));
+//                usersInformation.setLastName(rs.getString(4));
                 list.add(usersInformation);
             }
         } catch (SQLException e) {
@@ -146,18 +140,21 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
     }
 
     public UsersInformation get(Integer id) {
+        PreparedStatement preparedStatement = getPrepareStatement(GET_BY_ID);
         try {
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM USERS_INFORMATION WHERE id = " + id.toString());
-            while (result.next()) {
-                UsersInformation m = new UsersInformation(result.getLong("id"), result.getString("firstname"),
-                         result.getString("secondname"),result.getString("lastname"));
-                return m;
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                UsersInformation usersInformation = new UsersInformation(rs.getLong("id"), rs.getString("firstname"),
+                        rs.getString("secondname"),rs.getString("lastname"));
+                return usersInformation;
             }
         } catch (SQLException e) {
            // Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
             e.printStackTrace();
             //IProLogger.LOGGER.error(e.getClass().getSimpleName() + ": " + e.getMessage());
+        }finally {
+            closePrepareStatement(preparedStatement);
         }
         return null;
     }

@@ -1,5 +1,7 @@
 package main.services;
 import java.util.List;
+
+import main.model.connection.ManagementSystem;
 import main.model.dao.UsersInformationDao;
 import main.model.dao.UsersInformationDaoImpl;
 import main.model.pojo.UsersInformation;
@@ -9,7 +11,7 @@ import main.model.pojo.UsersInformation;
 public class UsersInformationService implements UsersInformationInterface {
 
     //ManagementSystem managementSystem = new ManagementSystem();
-    public static UsersInformationDao usersInformationDao = new UsersInformationDaoImpl(ManagementSystem.getCon());
+    public static UsersInformationDao usersInformationDao = new UsersInformationDaoImpl();
 
     public  List<UsersInformation> getAll(){
         return usersInformationDao.getAll();

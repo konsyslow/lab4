@@ -1,6 +1,7 @@
 package main.model.dao;
 
 import main.model.pojo.Users;
+import main.model.connection.ManagementSystem;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -16,7 +17,7 @@ public class UserDAOImpl implements UserDAO {
         PropertyConfigurator.configure("C:\\Users\\admin\\Documents\\lab3_Suslov_KV\\lab3\\lo4j.properties");
     }
 //private static final Logger LOGGER = Logger.getLogger(UserDAOImpl.class);
-    private Connection connection;
+    //private Connection connection;
     // private ConnectionPool connectionPool;
 
     public static final String SELECT_ALL_USERS = "SELECT * FROM USERS";
@@ -26,13 +27,15 @@ public class UserDAOImpl implements UserDAO {
             "login=?, password=? WHERE id=?";
     public static final String DELETE_USER = "DELETE FROM users WHERE id=?";
     public static final String FIND_USER = "SELECT * FROM users WHERE login = ? AND password = ?";
+    public static final String GET_BY_ID = "SELECT * FROM users where id = ?";
 
-    public UserDAOImpl(Connection connection){//}, ConnectionPool connectionPool) {
-        this.connection = connection;
-        //this.connectionPool = connectionPool;
-    }
+//    public UserDAOImpl(Connection connection){//}, ConnectionPool connectionPool) {
+//        this.connection = connection;
+//        //this.connectionPool = connectionPool;
+//    }
 
     public PreparedStatement getPrepareStatement(String sql) {
+        Connection connection = ManagementSystem.getCon();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement(sql);
@@ -123,20 +126,24 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public Users get(Integer id){
+        PreparedStatement preparedStatement = getPrepareStatement(GET_BY_ID);
         try {
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM USERS WHERE id = " + id.toString());
-            while (result.next()) {
-                Users m = new Users(result.getLong("id"), result.getString("login"),
-                        result.getString("password"),result.getInt("isblocked"));
-                return m;
+//            Statement statement = connection.createStatement();
+//            ResultSet result = statement.executeQuery("SELECT * FROM USERS WHERE id = " + id.toString());
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Users user = new Users(rs.getLong("id"), rs.getString("login"),
+                        rs.getString("password"),rs.getInt("isblocked"));
+                return user;
             }
         } catch (SQLException e) {
             e.printStackTrace();
            // Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
             //IProLogger.LOGGER.error(e.getClass().getSimpleName() + ": " + e.getMessage());
+        }finally {
+            closePrepareStatement(preparedStatement);
         }
         return null;
-
     }
 }
