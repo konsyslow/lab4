@@ -38,6 +38,10 @@
   <listener>
     <listener-class>main.controllers.listeners.MySessionListener</listener-class>
   </listener>
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/error.jsp</location>
+  </error-page>
   <filter-mapping>
     <filter-name>WhiteFilter</filter-name>
     <url-pattern>/listUsers</url-pattern>
