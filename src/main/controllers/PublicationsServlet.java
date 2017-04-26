@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by admin on 20.04.2017.
@@ -32,18 +34,43 @@ public class PublicationsServlet extends HttpServlet {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/publications.jsp");
         dispatcher.forward(req, resp);
 
-        String button = req.getParameter("button");
 
-        if ("update".equals(button)) {
-           // publicationsService.update();
-        } else if ("delete".equals(button)) {
-            //publicationsService.delete();
-        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        String button = req.getParameter("button");
+
+        Integer userId = Integer.parseInt(req.getSession().getAttribute("userId").toString());
+        if ("update".equals(button)) {
+            // publicationsService.update();
+        } else if (isDelete(button)) {
+            int publicationsId = getPublicationId(button);
+            publicationsService.delete(publicationsId);
+        }else if ("read".equals(button)) {
+
+        }else if ("new publication".equals(button)) {
+            publicationsService.insert(11, userId, "newpub2", "novel");
+        }
+        resp.sendRedirect(req.getContextPath() + "/publications");
+    }
+
+    private boolean isDelete(String inputString){
+        String regularExpression = "delete(.*)";
+        Pattern pattern = Pattern.compile(regularExpression);
+        Matcher match = pattern.matcher(inputString);
+        return match.matches();
+    }
+    private int getPublicationId(String inputString){
+        int res = -1;
+        String regularExpression = "\\d+";
+        Pattern pattern = Pattern.compile(regularExpression);
+        Matcher match = pattern.matcher(inputString);
+        if (match.find()) {
+            res = Integer.parseInt(match.group().toString());
+        }
+        return res;
     }
 
 

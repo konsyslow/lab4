@@ -38,7 +38,7 @@
     </c:forEach>
 </table>
 <h2>My publications</h2>
-<form action="${pageContext.request.contextPath}/publications" method="post">
+<form action="publications" method="post">
 <table border="1">
     <thead>
     <tr>
@@ -56,10 +56,12 @@
         <td><c:out value="${usersPublications.name}"></c:out></td>
         <td><c:out value="${usersPublications.genre}"></c:out></td>
         <td><button type="submit" name="button" value="update">update</button></td>
-        <td><button type="submit" name="button" value="delete">delete</button></td>
+        <td><button type="submit" name="button" value="delete ${usersPublications.id}">delete</button></td>
+        <td><button type="submit" name="button" value="read">read</button></td>
     </tr>
     </c:forEach>
 </table>
+    <button type="submit" name="button" value="new publication">new publication</button>
 </form>
 </body>
 </html>
