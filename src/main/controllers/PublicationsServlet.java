@@ -25,10 +25,20 @@ public class PublicationsServlet extends HttpServlet {
         req.setAttribute("value", "Hello, user");
 
         List<Publications> publications = publicationsService.getAll();
+        Integer userId = Integer.parseInt(req.getSession().getAttribute("userId").toString());
+        List<Publications> usersPublications = publicationsService.getUsersPublications(userId);
         req.setAttribute("publications", publications);
-
+        req.setAttribute("usersPublications", usersPublications);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/publications.jsp");
         dispatcher.forward(req, resp);
+
+        String button = req.getParameter("button");
+
+        if ("update".equals(button)) {
+           // publicationsService.update();
+        } else if ("delete".equals(button)) {
+            //publicationsService.delete();
+        }
     }
 
     @Override

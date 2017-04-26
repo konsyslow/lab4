@@ -29,4 +29,7 @@ public class PublicationsService implements PublicationsServiceInterface {
         Publications publications = new Publications(id, user_id,name,genre);
         publicationsDao.insertPublication(publications);
     }
+    public List<Publications> getUsersPublications(Integer userId){
+        return publicationsDao.getUsersPublications(userId);
+    }
 }

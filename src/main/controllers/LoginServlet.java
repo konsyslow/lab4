@@ -34,11 +34,13 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        if (userService.auth(login, password) != null) {
+        Users user = userService.auth(login, password);
+        if (user != null) {
             req.getSession().setAttribute("userLogin", login);
+            req.getSession().setAttribute("userId", user.getId());
             //logger.debug("user: " + login + " logged" );
-            resp.sendRedirect(req.getContextPath() + "/listUsers");
-            //resp.sendRedirect(req.getContextPath() + "/welcome");
+            //resp.sendRedirect(req.getContextPath() + "/listUsers");
+            resp.sendRedirect(req.getContextPath() + "/publications");
 
 
            // resp.sendRedirect(req.getContextPath() + "/students/");

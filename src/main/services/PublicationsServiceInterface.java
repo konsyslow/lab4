@@ -13,4 +13,5 @@ public interface PublicationsServiceInterface {
     public void delete(Integer id);
     //public UsersInformation create();
     public void insert(Integer id, Integer user_id, String name, String genre);
+    List<Publications> getUsersPublications(Integer userId);
 }

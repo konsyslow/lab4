@@ -13,9 +13,9 @@
     <title>Publications</title>
 </head>
 <body>
-<% String message = (String) request.getAttribute("value");%>
+<% String message = (String) request.getAttribute("value");%> <a href='logout.jsp'>Log out</a>
 <h1>
-    <%=message%>
+    <%=message%> <%=session.getAttribute("userLogin")%>
 </h1>
 
 <table border="1">
@@ -36,6 +36,30 @@
         <td><c:out value="${publications.genre}"></c:out></td>
     </tr>
     </c:forEach>
-
+</table>
+<h2>My publications</h2>
+<form action="${pageContext.request.contextPath}/publications" method="post">
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>user_id</th>
+        <th>name</th>
+        <th>genre</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${requestScope.usersPublications}" var="usersPublications">
+    <tr>
+        <td><c:out value="${usersPublications.id}"></c:out></td>
+        <td><c:out value="${usersPublications.user_id}"></c:out></td>
+        <td><c:out value="${usersPublications.name}"></c:out></td>
+        <td><c:out value="${usersPublications.genre}"></c:out></td>
+        <td><button type="submit" name="button" value="update">update</button></td>
+        <td><button type="submit" name="button" value="delete">delete</button></td>
+    </tr>
+    </c:forEach>
+</table>
+</form>
 </body>
 </html>

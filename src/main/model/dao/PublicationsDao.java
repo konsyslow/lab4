@@ -10,6 +10,7 @@ import java.util.List;
 public interface PublicationsDao {
     void insertPublication(Publications publication);
     List<Publications> getAll();
+    List<Publications> getUsersPublications(Integer userId);
     void updatePublication(Publications publication);
     void deletePublication(Integer id);
     Publications getByUserId(Integer user_id);

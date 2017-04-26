@@ -16,7 +16,7 @@ public class WhiteList implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
         String userLogin = (String) ((HttpServletRequest) servletRequest)
-                .getSession().getAttribute("userLogin");
+                .getSession().getAttribute("userId");
         if (userLogin != null) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
