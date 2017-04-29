@@ -18,25 +18,25 @@
 <h1>
     <%=message%> <%=session.getAttribute("userLogin")%>
 </h1>
- <table border="1">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>firstName</th>
-            <th>secondName</th>
-            <th>lastName</th>
-        </tr>
-        </thead>
-        <tbody>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>firstName</th>
+        <th>secondName</th>
+        <th>lastName</th>
+    </tr>
+    </thead>
+    <tbody>
     <c:forEach items="${requestScope.usersInformations}" var="usersInformation">
-        <tr>
-            <td><c:out value="${usersInformation.id}"></c:out></td>
-            <td><c:out value="${usersInformation.firstName}"></c:out></td>
-            <td><c:out value="${usersInformation.secondName}"></c:out></td>
-            <td><c:out value="${usersInformation.lastName}"></c:out></td>
-        </tr>
+    <tr>
+        <td><c:out value="${usersInformation.id}"></c:out></td>
+        <td><c:out value="${usersInformation.firstName}"></c:out></td>
+        <td><c:out value="${usersInformation.secondName}"></c:out></td>
+        <td><c:out value="${usersInformation.lastName}"></c:out></td>
+    </tr>
     </c:forEach>
-        <tbody/>
+    <tbody/>
 </table>
 </body>
 </html>

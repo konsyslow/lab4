@@ -40,8 +40,7 @@ public class UserDAOImpl implements UserDAO {
         try {
             ps = connection.prepareStatement(sql);
         } catch (SQLException e) {
-            //Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         }
 
         return ps;
@@ -52,8 +51,7 @@ public class UserDAOImpl implements UserDAO {
             try {
                 ps.close();
             } catch (SQLException e) {
-               // Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-                e.printStackTrace();
+                Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
             }
         }
     }
@@ -68,11 +66,10 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setLong(3, user.isBlocked());
             preparedStatement.executeUpdate();
-            closePrepareStatement(preparedStatement);
         } catch (SQLException e) {
-            //LOGGER.error("insertUser",e);
             Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
+        }finally {
+            closePrepareStatement(preparedStatement);
         }
     }
 
@@ -90,8 +87,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e){
-           // Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
+           Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         }finally {
             closePrepareStatement(preparedStatement);
         }
@@ -107,14 +103,11 @@ public class UserDAOImpl implements UserDAO {
             if (resultSet.next()) {
                 user = createEntity(resultSet);
             }
-
-            //logger.debug("user " + user);
         } catch (SQLException e) {
-            //logger.error(e);
-            //Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
+        }finally {
+            closePrepareStatement(preparedStatement);
         }
-
         return user;
     }
 
@@ -138,9 +131,7 @@ public class UserDAOImpl implements UserDAO {
                 return user;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-           // Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            //IProLogger.LOGGER.error(e.getClass().getSimpleName() + ": " + e.getMessage());
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         }finally {
             closePrepareStatement(preparedStatement);
         }

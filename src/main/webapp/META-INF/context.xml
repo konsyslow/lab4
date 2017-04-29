@@ -3,8 +3,8 @@
     <Resource
             driverClassName="oracle.jdbc.driver.OracleDriver"
             maxActive="4"
-            maxIdle="2"
-            maxWait="5000"
+            maxIdle="30"
+            maxWait="10000"
             name="jdbc/StudentsDS"
             username="system"
             password="system"

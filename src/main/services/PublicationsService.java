@@ -12,12 +12,18 @@ import java.util.List;
  */
 public class PublicationsService implements PublicationsServiceInterface {
     private static PublicationsDao publicationsDao = new PublicationsDaoImpl();
+
     public List<Publications> getAll() {
+
         return publicationsDao.getAll();
     }
 
-    public Publications get(Integer user_id) {
-        return publicationsDao.getByUserId(user_id);
+    public Publications get(Integer id) {
+
+        return publicationsDao.getById(id);
+    }
+    public void update(Publications publication){
+        publicationsDao.updatePublication(publication);
     }
 
     public void delete(Integer id) {
@@ -25,9 +31,8 @@ public class PublicationsService implements PublicationsServiceInterface {
         publicationsDao.deletePublication(id);
     }
 
-    public void insert(Integer id, Integer user_id, String name, String genre) {
-        Publications publications = new Publications(id, user_id,name,genre);
-        publicationsDao.insertPublication(publications);
+    public void insert(Integer user_id, String name, String genre) {
+        publicationsDao.insertPublication(user_id, name, genre);
     }
     public List<Publications> getUsersPublications(Integer userId){
         return publicationsDao.getUsersPublications(userId);

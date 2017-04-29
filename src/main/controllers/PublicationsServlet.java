@@ -3,75 +3,75 @@ package main.controllers;
 import main.model.pojo.Publications;
 import main.services.PublicationsService;
 import main.services.PublicationsServiceInterface;
-import main.services.UsersInformationInterface;
-import main.services.UsersInformationService;
+import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
- * Created by admin on 20.04.2017.
+ * Created by admin on 27.04.2017.
  */
 public class PublicationsServlet extends HttpServlet {
+
     private static PublicationsServiceInterface publicationsService = new PublicationsService();
+
+    private static final Logger LOGGER = Logger.getLogger(PublicationsServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String publicationId = req.getParameter("id");
+        String user_id = "", name = "", genre = "";
 
-        req.setAttribute("value", "Hello, user");
+        if ((publicationId != null) && (publicationId.matches("\\d+"))) {
+            req.setAttribute("id", publicationId);
+            Publications publication = publicationsService.get(Integer.parseInt(publicationId));
+            if (publication != null){
+                name = publication.getName();
+                genre = publication.getGenre();
+                user_id = String.valueOf(publication.getUser_id());
+            }
+        }
 
-        List<Publications> publications = publicationsService.getAll();
-        Integer userId = Integer.parseInt(req.getSession().getAttribute("userId").toString());
-        List<Publications> usersPublications = publicationsService.getUsersPublications(userId);
-        req.setAttribute("publications", publications);
-        req.setAttribute("usersPublications", usersPublications);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/publications.jsp");
-        dispatcher.forward(req, resp);
+        //req.setAttribute("user_id", user_id);
+        req.setAttribute("name", name);
+        req.setAttribute("genre", genre);
 
 
+        req.getRequestDispatcher("/publications.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String button = req.getParameter("button");
+        try {
+            String id = req.getParameter("id");
+            //int user_id = Integer.parseInt(req.getParameter("user_id"));
+            Integer user_id = Integer.parseInt(req.getSession().getAttribute("userId").toString());
+            String name = req.getParameter("name");
+            String genre = req.getParameter("genre");
 
-        Integer userId = Integer.parseInt(req.getSession().getAttribute("userId").toString());
-        if ("update".equals(button)) {
-            // publicationsService.update();
-        } else if (isDelete(button)) {
-            int publicationsId = getPublicationId(button);
-            publicationsService.delete(publicationsId);
-        }else if ("read".equals(button)) {
-
-        }else if ("new publication".equals(button)) {
-            publicationsService.insert(11, userId, "newpub2", "novel");
+             if ((id == null) || ("null".equals(id))) {
+                publicationsService.insert(user_id, name, genre);
+            }else{
+                 Publications publication = publicationsService.get(Integer.parseInt(id));
+                 publication.setUser_id(user_id);
+                 publication.setName(name);
+                 publication.setGenre(genre);
+                 publicationsService.update(publication);
+            }
+        }catch (Exception e){
+            LOGGER.error(e);
         }
-        resp.sendRedirect(req.getContextPath() + "/publications");
+        resp.sendRedirect(req.getContextPath() + "/listPublications");
     }
 
-    private boolean isDelete(String inputString){
-        String regularExpression = "delete(.*)";
-        Pattern pattern = Pattern.compile(regularExpression);
-        Matcher match = pattern.matcher(inputString);
-        return match.matches();
-    }
-    private int getPublicationId(String inputString){
-        int res = -1;
-        String regularExpression = "\\d+";
-        Pattern pattern = Pattern.compile(regularExpression);
-        Matcher match = pattern.matcher(inputString);
-        if (match.find()) {
-            res = Integer.parseInt(match.group().toString());
-        }
-        return res;
-    }
-
-
+//    @Override
+//    public void init(ServletConfig config) throws ServletException {
+//        super.init(config);
+//        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+//                config.getServletContext());
+//    }
 }

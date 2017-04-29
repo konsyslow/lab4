@@ -6,62 +6,20 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page errorPage="error.jsp" %>
 <html>
 <head>
     <title>Publications</title>
 </head>
+<h2><a href='logout.jsp'>Log out</a></h2>
 <body>
-<% String message = (String) request.getAttribute("value");%> <a href='logout.jsp'>Log out</a>
-<h1>
-    <%=message%> <%=session.getAttribute("userLogin")%>
-</h1>
-
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>user_id</th>
-        <th>name</th>
-        <th>genre</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${requestScope.publications}" var="publications">
-    <tr>
-        <td><c:out value="${publications.id}"></c:out></td>
-        <td><c:out value="${publications.user_id}"></c:out></td>
-        <td><c:out value="${publications.name}"></c:out></td>
-        <td><c:out value="${publications.genre}"></c:out></td>
-    </tr>
-    </c:forEach>
-</table>
-<h2>My publications</h2>
-<form action="publications" method="post">
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>user_id</th>
-        <th>name</th>
-        <th>genre</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${requestScope.usersPublications}" var="usersPublications">
-    <tr>
-        <td><c:out value="${usersPublications.id}"></c:out></td>
-        <td><c:out value="${usersPublications.user_id}"></c:out></td>
-        <td><c:out value="${usersPublications.name}"></c:out></td>
-        <td><c:out value="${usersPublications.genre}"></c:out></td>
-        <td><button type="submit" name="button" value="update">update</button></td>
-        <td><button type="submit" name="button" value="delete ${usersPublications.id}">delete</button></td>
-        <td><button type="submit" name="button" value="read">read</button></td>
-    </tr>
-    </c:forEach>
-</table>
-    <button type="submit" name="button" value="new publication">new publication</button>
+<form method="post">
+    <input type="text" name="id" value="<%= request.getAttribute("id")%>" >id</input>
+    <%--<input type="text" name="user_id" value="<%= request.getAttribute("user_id")%>"/>--%>
+    <input type="text" name="name" value="<%= request.getAttribute("name")%>">name</input>
+    <input type="text" name="genre" value="<%= request.getAttribute("genre") %>">genre</input>
+    <input type="submit" value="Save" />
 </form>
+
 </body>
 </html>

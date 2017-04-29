@@ -2,6 +2,9 @@ package main.model.dao;
 
 import main.model.pojo.UsersInformation;
 import main.model.connection.ManagementSystem;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,9 +14,9 @@ import java.util.List;
  * Created by admin on 18.04.2017.
  */
 public class UsersInformationDaoImpl implements UsersInformationDao {
-//    static{
-//        PropertyConfigurator.configure("lo4j.properties");
-//    }
+    static{
+        PropertyConfigurator.configure("C:\\Users\\admin\\Documents\\lab3_Suslov_KV\\lab3\\lo4j.properties");
+    }
 
     //private Connection connection;
    // private ConnectionPool connectionPool;
@@ -37,8 +40,7 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
         try {
             ps = connection.prepareStatement(sql);
         } catch (SQLException e) {
-            //Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         }
 
         return ps;
@@ -49,8 +51,7 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
             try {
                 ps.close();
             } catch (SQLException e) {
-               // Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-                e.printStackTrace();
+               Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
             }
         }
     }
@@ -70,8 +71,7 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
                 list.add(usersInformation);
             }
         } catch (SQLException e) {
-            //Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         } finally {
             closePrepareStatement(preparedStatement);
         }
@@ -87,10 +87,10 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
             preparedStatement.setString(2, usersInformation.getSecondName());
             preparedStatement.setString(3, usersInformation.getLastName());
             preparedStatement.executeUpdate();
-            closePrepareStatement(preparedStatement);
         } catch (SQLException e) {
-           // Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
+           Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
+        }finally {
+            closePrepareStatement(preparedStatement);
         }
     }
 
@@ -102,10 +102,10 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
             preparedStatement.setString(2, secondName);
             preparedStatement.setString(3, lastName);
             preparedStatement.executeUpdate();
-            closePrepareStatement(preparedStatement);
         } catch (SQLException e) {
-            //Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
+        }finally {
+            closePrepareStatement(preparedStatement);
         }
     }
 
@@ -118,8 +118,7 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
             preparedStatement.setLong(4, usersInformation.getId());
             preparedStatement.execute();
         }catch (SQLException e){
-            //Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         }
         finally {
             closePrepareStatement(preparedStatement);
@@ -132,8 +131,7 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e){
-            //Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         }finally {
             closePrepareStatement(preparedStatement);
         }
@@ -150,9 +148,7 @@ public class UsersInformationDaoImpl implements UsersInformationDao {
                 return usersInformation;
             }
         } catch (SQLException e) {
-           // Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
-            //IProLogger.LOGGER.error(e.getClass().getSimpleName() + ": " + e.getMessage());
+           Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         }finally {
             closePrepareStatement(preparedStatement);
         }

@@ -2,6 +2,9 @@ package main.model.dao;
 
 import main.model.pojo.Publications;
 import main.model.connection.ManagementSystem;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,29 +14,28 @@ import java.util.List;
  * Created by admin on 19.04.2017.
  */
 public class PublicationsDaoImpl implements PublicationsDao {
+    static{
+        PropertyConfigurator.configure("C:\\Users\\admin\\Documents\\lab3_Suslov_KV\\lab3\\lo4j.properties");
+    }
 
-    //private Connection connection;
+    private Connection connection;
     //private ConnectionPool connectionPool;
 
     public static final String SELECT_ALL_PUBLICATIONS = "SELECT * FROM PUBLICATIONS WHERE user_id IN " +
             "(SELECT id FROM users WHERE isblocked = 0)";
     public static final String SELECT_PUBLICATIONS = "SELECT * FROM PUBLICATIONS WHERE user_id = ?";
-    public static final String INSERT_PUBLICATIONS = "INSERT INTO PUBLICATIONS (id, user_id, name, genre) VALUES (?,?,?,?)";
-    public static final String UPDATE_PUBLICATIONS = "UPDATE PUBLICATIONS SET user_id=? name=? genre=? WHERE id=?";
+    public static final String INSERT_PUBLICATIONS = "INSERT INTO PUBLICATIONS (user_id, name, genre) VALUES (?,?,?)";
+    public static final String UPDATE_PUBLICATIONS = "UPDATE PUBLICATIONS SET user_id=?, name=?, genre=? WHERE id=?";
     public static final String DELETE_PUBLICATION = "DELETE FROM PUBLICATIONS WHERE id=?";
-    public static final String GET_BY_USER_ID = "SELECT * FROM PUBLICATIONS where user_id = ?";
-
-//    public PublicationsDaoImpl(Connection connection){//, ConnectionPool connectionPool) {
-//        this.connection = connection;
-//        //this.connectionPool = connectionPool;
-//    }
+    public static final String GET_BY_ID = "SELECT * FROM PUBLICATIONS where id = ?";
 
     public PreparedStatement getPrepareStatement(String sql) {
-        Connection connection = ManagementSystem.getCon();
+        connection = ManagementSystem.getCon();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement(sql);
         } catch (SQLException e) {
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
             e.printStackTrace();
         }
 
@@ -44,8 +46,9 @@ public class PublicationsDaoImpl implements PublicationsDao {
         if (ps != null) {
             try {
                 ps.close();
+                connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
             }
         }
     }
@@ -61,7 +64,7 @@ public class PublicationsDaoImpl implements PublicationsDao {
                 list.add(publication);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         } finally {
             closePrepareStatement(preparedStatement);
         }
@@ -81,7 +84,7 @@ public class PublicationsDaoImpl implements PublicationsDao {
                 list.add(publication);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         } finally {
             closePrepareStatement(preparedStatement);
         }
@@ -97,9 +100,24 @@ public class PublicationsDaoImpl implements PublicationsDao {
             preparedStatement.setString(3, publication.getName());
             preparedStatement.setString(4, publication.getGenre());
             preparedStatement.executeUpdate();
-            closePrepareStatement(preparedStatement);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
+        } finally {
+            closePrepareStatement(preparedStatement);
+        }
+    }
+
+    public void insertPublication(long user_id, String name, String genre) {
+        PreparedStatement preparedStatement = getPrepareStatement(INSERT_PUBLICATIONS);
+        try {
+            preparedStatement.setLong(1, user_id);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, genre);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
+        } finally {
+            closePrepareStatement(preparedStatement);
         }
     }
 
@@ -110,9 +128,9 @@ public class PublicationsDaoImpl implements PublicationsDao {
             preparedStatement.setString(2, publication.getName());
             preparedStatement.setString(3, publication.getGenre());
             preparedStatement.setLong(4, publication.getId());
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         }catch (SQLException e){
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         }
         finally {
             closePrepareStatement(preparedStatement);
@@ -125,16 +143,16 @@ public class PublicationsDaoImpl implements PublicationsDao {
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException e){
-            e.printStackTrace();
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
         }finally {
             closePrepareStatement(preparedStatement);
         }
     }
 
-    public Publications getByUserId(Integer user_id) {
-        PreparedStatement preparedStatement = getPrepareStatement(GET_BY_USER_ID);
+    public Publications getById(Integer id) {
+        PreparedStatement preparedStatement = getPrepareStatement(GET_BY_ID);
         try {
-            preparedStatement.setInt(1, user_id);
+            preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Publications publication = new Publications(rs.getInt("id"), rs.getInt("user_id"),
@@ -142,9 +160,9 @@ public class PublicationsDaoImpl implements PublicationsDao {
                 return publication;
             }
         } catch (SQLException e) {
-            // Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
-            e.printStackTrace();
-            //IProLogger.LOGGER.error(e.getClass().getSimpleName() + ": " + e.getMessage());
+             Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
+        } finally {
+            closePrepareStatement(preparedStatement);
         }
         return null;
     }
