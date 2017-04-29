@@ -48,10 +48,6 @@ public class RegistrationServlet extends HttpServlet {
         LOGGER.debug("user " + firstName + secondName + lastName);
         if(firstName=="" && secondName=="" && lastName=="" &&
                 login=="" && password=="") {
-//        Logger.getLogger(RegistrationServlet.class.getName()).
-//                log(Level.DEBUG, "user " + firstName + secondName + lastName );
-            //resp.sendRedirect("welcome.jsp");
-//        req.getSession().setAttribute("userLogin", login);
             resp.sendRedirect(req.getContextPath() + "/Registration");
         }else{
             resp.sendRedirect(req.getContextPath() + "/");

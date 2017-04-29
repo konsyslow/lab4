@@ -13,6 +13,6 @@ public interface PublicationsServiceInterface {
     public void delete(Integer id);
     public void update(Publications publication);
    // public UsersInformation create();
-    public void insert(Integer user_id, String name, String genre);
+    public void insert(Integer user_id, String name, String genre, String text);
     List<Publications> getUsersPublications(Integer userId);
 }

@@ -10,6 +10,10 @@
     <servlet-class>main.controllers.HelloServlet</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>ReadingServlet</servlet-name>
+    <servlet-class>main.controllers.ReadingServlet</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>AllPublicationsServlet</servlet-name>
     <servlet-class>main.controllers.AllPublicationsServlet</servlet-class>
   </servlet>
@@ -56,6 +60,10 @@
   <servlet-mapping>
     <servlet-name>HelloServlet</servlet-name>
     <url-pattern>/welcome</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ReadingServlet</servlet-name>
+    <url-pattern>/reading</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>AllPublicationsServlet</servlet-name>

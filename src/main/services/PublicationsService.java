@@ -31,8 +31,8 @@ public class PublicationsService implements PublicationsServiceInterface {
         publicationsDao.deletePublication(id);
     }
 
-    public void insert(Integer user_id, String name, String genre) {
-        publicationsDao.insertPublication(user_id, name, genre);
+    public void insert(Integer user_id, String name, String genre, String text) {
+        publicationsDao.insertPublication(user_id, name, genre, text);
     }
     public List<Publications> getUsersPublications(Integer userId){
         return publicationsDao.getUsersPublications(userId);

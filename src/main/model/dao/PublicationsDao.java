@@ -13,6 +13,6 @@ public interface PublicationsDao {
     List<Publications> getUsersPublications(Integer userId);
     void updatePublication(Publications publication);
     void deletePublication(Integer id);
-    void insertPublication(long user_id, String name, String genre);
+    void insertPublication(long user_id, String name, String genre, String text);
     Publications getById(Integer id);
 }

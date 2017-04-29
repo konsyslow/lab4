@@ -15,9 +15,9 @@
 <body>
 <form method="post">
     <input type="text" name="id" value="<%= request.getAttribute("id")%>" >id</input>
-    <%--<input type="text" name="user_id" value="<%= request.getAttribute("user_id")%>"/>--%>
     <input type="text" name="name" value="<%= request.getAttribute("name")%>">name</input>
     <input type="text" name="genre" value="<%= request.getAttribute("genre") %>">genre</input>
+    <input type="text" name="text" value="<%= request.getAttribute("text") %>">text</input>
     <input type="submit" value="Save" />
 </form>
 

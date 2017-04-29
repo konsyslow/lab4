@@ -8,16 +8,26 @@ public class Publications {
     private long user_id;
     private String name;
     private String genre;
+    private String text;
 
-    public Publications(int id, int user_id, String name, String genre) {
+    public Publications(int id, int user_id, String name, String genre, String text) {
         this.id = id;
         this.user_id = user_id;
         this.name = name;
         this.genre = genre;
+        this.text = text;
     }
 
     public Publications(){
 
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public long getId() {

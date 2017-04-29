@@ -24,8 +24,8 @@ public class PublicationsDaoImpl implements PublicationsDao {
     public static final String SELECT_ALL_PUBLICATIONS = "SELECT * FROM PUBLICATIONS WHERE user_id IN " +
             "(SELECT id FROM users WHERE isblocked = 0)";
     public static final String SELECT_PUBLICATIONS = "SELECT * FROM PUBLICATIONS WHERE user_id = ?";
-    public static final String INSERT_PUBLICATIONS = "INSERT INTO PUBLICATIONS (user_id, name, genre) VALUES (?,?,?)";
-    public static final String UPDATE_PUBLICATIONS = "UPDATE PUBLICATIONS SET user_id=?, name=?, genre=? WHERE id=?";
+    public static final String INSERT_PUBLICATIONS = "INSERT INTO PUBLICATIONS (user_id, name, genre, text) VALUES (?,?,?,?)";
+    public static final String UPDATE_PUBLICATIONS = "UPDATE PUBLICATIONS SET user_id=?, name=?, genre=?, text=? WHERE id=?";
     public static final String DELETE_PUBLICATION = "DELETE FROM PUBLICATIONS WHERE id=?";
     public static final String GET_BY_ID = "SELECT * FROM PUBLICATIONS where id = ?";
 
@@ -60,7 +60,7 @@ public class PublicationsDaoImpl implements PublicationsDao {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Publications publication = new Publications(rs.getInt(1), rs.getInt(2),
-                        rs.getString(3), rs.getString(4) );
+                        rs.getString(3), rs.getString(4), rs.getString(5) );
                 list.add(publication);
             }
         } catch (SQLException e) {
@@ -80,7 +80,7 @@ public class PublicationsDaoImpl implements PublicationsDao {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Publications publication = new Publications(rs.getInt(1), rs.getInt(2),
-                        rs.getString(3), rs.getString(4) );
+                        rs.getString(3), rs.getString(4), rs.getString(5) );
                 list.add(publication);
             }
         } catch (SQLException e) {
@@ -99,6 +99,7 @@ public class PublicationsDaoImpl implements PublicationsDao {
             preparedStatement.setLong(2, publication.getUser_id());
             preparedStatement.setString(3, publication.getName());
             preparedStatement.setString(4, publication.getGenre());
+            preparedStatement.setString(5, publication.getText());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
@@ -107,12 +108,13 @@ public class PublicationsDaoImpl implements PublicationsDao {
         }
     }
 
-    public void insertPublication(long user_id, String name, String genre) {
+    public void insertPublication(long user_id, String name, String genre, String text) {
         PreparedStatement preparedStatement = getPrepareStatement(INSERT_PUBLICATIONS);
         try {
             preparedStatement.setLong(1, user_id);
             preparedStatement.setString(2, name);
             preparedStatement.setString(3, genre);
+            preparedStatement.setString(4, text);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
@@ -127,7 +129,8 @@ public class PublicationsDaoImpl implements PublicationsDao {
             preparedStatement.setLong(1, publication.getUser_id());
             preparedStatement.setString(2, publication.getName());
             preparedStatement.setString(3, publication.getGenre());
-            preparedStatement.setLong(4, publication.getId());
+            preparedStatement.setString(4, publication.getText());
+            preparedStatement.setLong(5, publication.getId());
             preparedStatement.executeUpdate();
         }catch (SQLException e){
             Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
@@ -156,7 +159,7 @@ public class PublicationsDaoImpl implements PublicationsDao {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Publications publication = new Publications(rs.getInt("id"), rs.getInt("user_id"),
-                        rs.getString("name"),rs.getString("genre"));
+                        rs.getString("name"),rs.getString("genre"), rs.getString("text"));
                 return publication;
             }
         } catch (SQLException e) {

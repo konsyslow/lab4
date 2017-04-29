@@ -26,13 +26,7 @@ public class ListController extends HttpServlet {
         req.setAttribute("value", "Hello, ");
 
         List<UsersInformation> usersInformations = service.getAll();
-//        Student student1 = new Student(1,"Vasya", 12,1);
-//        Student student2 = new Student(2,"Kolya", 22,1);
-//        students.add(student1);
-//        students.add(student2);
-        //List<Student> list = service.getAllStudents();
         req.setAttribute("usersInformations", usersInformations);
-
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listUsers.jsp");
         dispatcher.forward(req, resp);
     }

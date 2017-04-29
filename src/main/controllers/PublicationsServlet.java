@@ -23,7 +23,7 @@ public class PublicationsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String publicationId = req.getParameter("id");
-        String user_id = "", name = "", genre = "";
+        String user_id = "", name = "", genre = "", text="";
 
         if ((publicationId != null) && (publicationId.matches("\\d+"))) {
             req.setAttribute("id", publicationId);
@@ -31,13 +31,12 @@ public class PublicationsServlet extends HttpServlet {
             if (publication != null){
                 name = publication.getName();
                 genre = publication.getGenre();
-                user_id = String.valueOf(publication.getUser_id());
+                text = publication.getText();
             }
         }
-
-        //req.setAttribute("user_id", user_id);
         req.setAttribute("name", name);
         req.setAttribute("genre", genre);
+        req.setAttribute("text", text);
 
 
         req.getRequestDispatcher("/publications.jsp").forward(req, resp);
@@ -48,18 +47,19 @@ public class PublicationsServlet extends HttpServlet {
 
         try {
             String id = req.getParameter("id");
-            //int user_id = Integer.parseInt(req.getParameter("user_id"));
             Integer user_id = Integer.parseInt(req.getSession().getAttribute("userId").toString());
             String name = req.getParameter("name");
             String genre = req.getParameter("genre");
+            String text = req.getParameter("text");
 
              if ((id == null) || ("null".equals(id))) {
-                publicationsService.insert(user_id, name, genre);
+                publicationsService.insert(user_id, name, genre,text);
             }else{
                  Publications publication = publicationsService.get(Integer.parseInt(id));
                  publication.setUser_id(user_id);
                  publication.setName(name);
                  publication.setGenre(genre);
+                 publication.setText(text);
                  publicationsService.update(publication);
             }
         }catch (Exception e){
@@ -67,11 +67,4 @@ public class PublicationsServlet extends HttpServlet {
         }
         resp.sendRedirect(req.getContextPath() + "/listPublications");
     }
-
-//    @Override
-//    public void init(ServletConfig config) throws ServletException {
-//        super.init(config);
-//        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-//                config.getServletContext());
-//    }
 }

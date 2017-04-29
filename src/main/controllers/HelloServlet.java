@@ -14,7 +14,6 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login2.jsp");
         req.setAttribute("value", "Hello, ");
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/welcome.jsp");
@@ -23,6 +22,6 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //super.doPost(req, resp);
+
     }
 }

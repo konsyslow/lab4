@@ -25,63 +25,22 @@ public class ListPublicationsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         req.setAttribute("value", "Hello, user");
-
-        //List<Publications> publications = publicationsService.getAll();
-//        Integer userId = Integer.parseInt(req.getSession().getAttribute("userId").toString());
-//        List<Publications> usersPublications = publicationsService.getUsersPublications(userId);
-        //req.setAttribute("publications", publications);
-       // req.setAttribute("usersPublications", usersPublications);
-        //////////////////////////////////////////////////////////////////
         String button = req.getParameter("delete");
-
-        //Integer userId = Integer.parseInt(req.getSession().getAttribute("userId").toString());
-//        if ("update".equals(button)) {
-//            // publicationsService.update();
-//        } else
-           // if("delete".equals(button)) { //(isDelete(button)) {
-                if ( button != null){
+            if ( button != null){
                 deleteStudent(req.getParameter("delete"));
                 resp.sendRedirect(req.getContextPath() + "/listPublications");
-//            int publicationsId = getPublicationId(button);
-//            publicationsService.delete(publicationsId);
-//        }else if ("read".equals(button)) {
-//
-//        }else if ("new publication".equals(button)) {
-//            //publicationsService.insert(11, userId, "newpub2", "novel");
-//        }
             }else {
                 Integer userId = Integer.parseInt(req.getSession().getAttribute("userId").toString());
                 List<Publications> usersPublications = publicationsService.getUsersPublications(userId);
                 req.setAttribute("usersPublications", usersPublications);
-                //resp.sendRedirect(req.getContextPath() + "/listPublications");
-                ///////////////////////////////////////////////////////////////////
                 getServletContext().getRequestDispatcher("/listPublications.jsp").forward(req, resp);
             }
-
-
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-    }
-
-    private boolean isDelete(String inputString){
-        String regularExpression = "delete(.*)";
-        Pattern pattern = Pattern.compile(regularExpression);
-        Matcher match = pattern.matcher(inputString);
-        return match.matches();
-    }
-    private int getPublicationId(String inputString){
-        int res = -1;
-        String regularExpression = "\\d+";
-        Pattern pattern = Pattern.compile(regularExpression);
-        Matcher match = pattern.matcher(inputString);
-        if (match.find()) {
-            res = Integer.parseInt(match.group().toString());
-        }
-        return res;
     }
 
     private void deleteStudent(String id){
