@@ -27,6 +27,7 @@ public class UserDAOImpl implements UserDAO {
             "login=?, password=? WHERE id=?";
     public static final String DELETE_USER = "DELETE FROM users WHERE id=?";
     public static final String FIND_USER = "SELECT * FROM users WHERE login = ? AND password = ?";
+    public static final String FIND_USER_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
     public static final String GET_BY_ID = "SELECT * FROM users where id = ?";
 
 //    public UserDAOImpl(Connection connection){//}, ConnectionPool connectionPool) {
@@ -99,6 +100,23 @@ public class UserDAOImpl implements UserDAO {
         try {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = createEntity(resultSet);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Exception.class.getName()).log(Level.ERROR, "Catch SQLException", e);
+        }finally {
+            closePrepareStatement(preparedStatement);
+        }
+        return user;
+    }
+
+    public Users findUserByLogin(String login) {
+        Users user = null;
+        PreparedStatement preparedStatement = getPrepareStatement(FIND_USER_BY_LOGIN);
+        try {
+            preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 user = createEntity(resultSet);

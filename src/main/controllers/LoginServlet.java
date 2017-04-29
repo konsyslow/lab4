@@ -1,6 +1,7 @@
 package main.controllers;
 
 import main.model.pojo.Users;
+import main.services.PasswordStorage;
 import main.services.UserService;
 import main.services.UserServiceInterface;
 import org.apache.log4j.PropertyConfigurator;
@@ -33,6 +34,13 @@ public class LoginServlet extends HttpServlet {
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+
+//        String pass_hash;
+//        try{
+//            pass_hash = PasswordStorage.createHash(password);
+//        }catch (PasswordStorage.CannotPerformOperationException e){
+//            e.printStackTrace();
+//        }
 
         Users user = userService.auth(login, password);
         if (user != null) {

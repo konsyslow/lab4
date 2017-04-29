@@ -1,9 +1,6 @@
 package main.controllers;
 
-import main.services.UserService;
-import main.services.UserServiceInterface;
-import main.services.UsersInformationInterface;
-import main.services.UsersInformationService;
+import main.services.*;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -39,8 +36,14 @@ public class RegistrationServlet extends HttpServlet {
         String lastName = req.getParameter("lastName");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        String hash_pass = null;
+        try {
+             hash_pass = PasswordStorage.createHash(password);
+        }catch(PasswordStorage.CannotPerformOperationException e){
+            e.printStackTrace();
+        }
         LOGGER.debug("userstr " + login + password);
-        userService.insert(login,password);
+        userService.insert(login,hash_pass);
         usersInformationService.insert(firstName,secondName,lastName);
         LOGGER.debug("user " + login + password);
        // Logger.getLogger(RegistrationServlet.class.getName()).log(Level.DEBUG, "user " + login + password);

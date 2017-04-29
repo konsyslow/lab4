@@ -14,12 +14,21 @@ public class UserService implements UserServiceInterface {
     private static UserDAO userDAO = new UserDAOImpl();
 
     public Users auth(String login, String password) {
-        Users user = userDAO.findUserByLoginAndPassword(login, password);
-        //Users user = new Users(1,"login2","login2", 0);
-        //LOGGER.debug("user: " + user);
+
+        //Users user = userDAO.findUserByLoginAndPassword(login, password);
+        Users user = userDAO.findUserByLogin(login);
 
         if (user != null && user.isBlocked()==1) {
             return null;
+        }else if(user != null && user.isBlocked()==0){
+            try {
+                boolean b = PasswordStorage.verifyPassword(password, user.getPassword());
+                if(b==false){
+                    user = null;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
        // logger.debug("user not blocked");
 

@@ -10,6 +10,7 @@ import java.util.List;
 public interface UserDAO {
 
     Users findUserByLoginAndPassword(String login, String password);
+    Users findUserByLogin(String login);
     //void insertUser(Users user);
    // void insertUser(String login, String password);
     void insertUser(Users user);
