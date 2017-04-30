@@ -43,8 +43,7 @@ public class RegistrationServlet extends HttpServlet {
             e.printStackTrace();
         }
         LOGGER.debug("userstr " + login + password);
-        userService.insert(login,hash_pass);
-        usersInformationService.insert(firstName,secondName,lastName);
+
         LOGGER.debug("user " + login + password);
        // Logger.getLogger(RegistrationServlet.class.getName()).log(Level.DEBUG, "user " + login + password);
 
@@ -53,6 +52,8 @@ public class RegistrationServlet extends HttpServlet {
                 login=="" && password=="") {
             resp.sendRedirect(req.getContextPath() + "/Registration");
         }else{
+            userService.insert(login,hash_pass);
+            usersInformationService.insert(firstName,secondName,lastName);
             resp.sendRedirect(req.getContextPath() + "/");
         }
 
