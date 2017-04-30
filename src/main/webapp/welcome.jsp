@@ -15,13 +15,13 @@
 <body>
 <% String message = (String) request.getAttribute("value");%> <a href='logout.jsp'>Log out</a>
 <h1>
-    <%=message%> <%=session.getAttribute("userLogin")%>
+    <%=message%> <%=session.getAttribute("login")%>
 </h1>
 <table border="1">
     <thead>
     <tr>
         <th> <a href = '<%= request.getContextPath() %>/listPublications'> My publications</a> </th>
-        <th> <a href = '<%= request.getContextPath() %>/AllPublications'> Publications</a> </th>
+        <th> <a href = '<%= request.getContextPath() %>/allPublications'> All Publications</a> </th>
     </tr>
     </thead>
 </table>

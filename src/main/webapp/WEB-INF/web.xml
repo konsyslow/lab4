@@ -6,6 +6,14 @@
 
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
+    <servlet-name>Main</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Main</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>HelloServlet</servlet-name>
     <servlet-class>main.controllers.HelloServlet</servlet-class>
   </servlet>
@@ -13,14 +21,7 @@
     <servlet-name>ReadingServlet</servlet-name>
     <servlet-class>main.controllers.ReadingServlet</servlet-class>
   </servlet>
-  <servlet>
-    <servlet-name>AllPublicationsServlet</servlet-name>
-    <servlet-class>main.controllers.AllPublicationsServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>main.controllers.LoginServlet</servlet-class>
-  </servlet>
+
   <servlet>
     <servlet-name>PublicationsServlet</servlet-name>
     <servlet-class>main.controllers.PublicationsServlet</servlet-class>
@@ -34,10 +35,6 @@
     <servlet-name>ListServlet</servlet-name>
     <servlet-class>main.controllers.ListController</servlet-class>
   </servlet>
-  <servlet>
-    <servlet-name>ListPublicationsServlet</servlet-name>
-    <servlet-class>main.controllers.ListPublicationsServlet</servlet-class>
-  </servlet>
   <filter>
     <filter-name>WhiteFilter</filter-name>
     <filter-class>main.controllers.filters.WhiteList</filter-class>
@@ -48,6 +45,15 @@
   <listener>
     <listener-class>main.controllers.listeners.MySessionListener</listener-class>
   </listener>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>WEB-INF/Main-servlet.xml</param-value>
+  </context-param>
+
   <error-page>
     <exception-type>java.lang.Throwable</exception-type>
     <location>/error.jsp</location>
@@ -65,14 +71,7 @@
     <servlet-name>ReadingServlet</servlet-name>
     <url-pattern>/reading</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>AllPublicationsServlet</servlet-name>
-    <url-pattern>/AllPublications</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>LoginServlet</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>PublicationsServlet</servlet-name>
     <url-pattern>/publications</url-pattern>
@@ -84,10 +83,6 @@
   <servlet-mapping>
     <servlet-name>ListServlet</servlet-name>
     <url-pattern>/listUsers</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>ListPublicationsServlet</servlet-name>
-    <url-pattern>/listPublications</url-pattern>
   </servlet-mapping>
   <resource-ref>
     <description>DB Connection</description>

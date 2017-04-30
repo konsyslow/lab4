@@ -4,14 +4,24 @@ import main.model.connection.ManagementSystem;
 import main.model.dao.UserDAO;
 import main.model.dao.UserDAOImpl;
 import main.model.pojo.Users;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by admin on 20.04.2017.
  */
+@Service
 public class UserService implements UserServiceInterface {
     private static UserDAO userDAO = new UserDAOImpl();
+
+    public static UserDAO getUserDAO() {
+        return userDAO;
+    }
+
+    public static void setUserDAO(UserDAO userDAO) {
+        UserService.userDAO = userDAO;
+    }
 
     public Users auth(String login, String password) {
 

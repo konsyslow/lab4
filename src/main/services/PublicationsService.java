@@ -4,14 +4,24 @@ import main.model.connection.ManagementSystem;
 import main.model.dao.PublicationsDao;
 import main.model.dao.PublicationsDaoImpl;
 import main.model.pojo.Publications;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by admin on 24.04.2017.
  */
+@Service
 public class PublicationsService implements PublicationsServiceInterface {
     private static PublicationsDao publicationsDao = new PublicationsDaoImpl();
+
+    public static PublicationsDao getPublicationsDao() {
+        return publicationsDao;
+    }
+
+    public static void setPublicationsDao(PublicationsDao publicationsDao) {
+        PublicationsService.publicationsDao = publicationsDao;
+    }
 
     public List<Publications> getAll() {
 

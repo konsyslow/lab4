@@ -15,7 +15,7 @@
 <body>
 <% String message = (String) request.getAttribute("value");%> <a href='logout.jsp'>Log out</a>
 <h1>
-    <%=message%> <%=session.getAttribute("userLogin")%>
+    <%=message%> <%=session.getAttribute("login")%>
 </h1>
 <h2>
     <a href = '<%= request.getContextPath() %>/welcome'> Welcome</a>
