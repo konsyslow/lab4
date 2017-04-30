@@ -17,8 +17,8 @@ public class AllPublicationsController {
     private PublicationsServiceInterface publicationsService;
     @RequestMapping(method = RequestMethod.GET)
     public String showList(Model model){
-        model.addAttribute("publications",publicationsService.getAll());
+        model.addAttribute("allPublications",publicationsService.getAll());
         model.addAttribute("value", "Hello,user");
-        return "publications";
+        return "allPublications";
     }
 }

@@ -21,11 +21,11 @@ public class ListPublicationsController {
     private  PublicationsServiceInterface publicationsService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView actionsWithList(@RequestParam(name="button", value = "delete", required = true) String button,
+    public ModelAndView actionsWithList(@RequestParam(name="delbutton", required = false) String strButton,
                                         Model model, HttpSession session){
         ModelAndView mav = new ModelAndView();
-        if ( button != null) {
-            deleteStudent(button);
+        if ( strButton != null) {
+            deleteStudent(strButton);
             mav.setViewName("redirect:/listPublications");
         }else{
             Integer userId = Integer.parseInt(session.getAttribute("userId").toString());

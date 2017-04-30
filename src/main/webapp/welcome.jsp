@@ -7,10 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page errorPage="error.jsp" %>
+<%--<%@ page errorPage="error.jsp" %>--%>
 <html>
 <head>
-    <title>Welcome</title>
+    <title>welcome</title>
 </head>
 <body>
 <% String message = (String) request.getAttribute("value");%> <a href='logout.jsp'>Log out</a>

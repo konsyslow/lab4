@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page errorPage="error.jsp" %>
+<%--<%@ page errorPage="error.jsp" %>--%>
 <html>
 <head>
     <title>allPublications</title>
@@ -32,13 +32,13 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${requestScope.publications}" var="publications">
+    <c:forEach items="${requestScope.allPublications}" var="allPublications">
     <tr>
-        <td><c:out value="${publications.id}"></c:out></td>
-        <td><c:out value="${publications.user_id}"></c:out></td>
-        <td><c:out value="${publications.name}"></c:out></td>
-        <td><c:out value="${publications.genre}"></c:out></td>
-        <td><input type="button" value="read" onclick="location.href = '<%= request.getContextPath() %>/reading?id=<c:out value="${publications.id}" />'"></td>
+        <td><c:out value="${allPublications.id}"></c:out></td>
+        <td><c:out value="${allPublications.user_id}"></c:out></td>
+        <td><c:out value="${allPublications.name}"></c:out></td>
+        <td><c:out value="${allPublications.genre}"></c:out></td>
+        <td><input type="button" value="read" onclick="location.href = '<%= request.getContextPath() %>/reading?id=<c:out value="${allPublications.id}" />'"></td>
 
     </tr>
     </c:forEach>

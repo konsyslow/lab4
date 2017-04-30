@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page errorPage="error.jsp" %>
+<%--<%@ page errorPage="error.jsp" %>--%>
 <html>
 <head>
     <title>Reading</title>
@@ -19,7 +19,7 @@
 </h1>
 <h2>
     <a href = '<%= request.getContextPath() %>/welcome'> Welcome</a>
-    <a href = '<%= request.getContextPath() %>/AllPublications'> All publications</a>
+    <a href = '<%= request.getContextPath() %>/allPublications'> All publications</a>
     <a href = '<%= request.getContextPath() %>/listPublications'> My publications</a>
 </h2>
 <h2>
