@@ -28,7 +28,7 @@ public class PublicationsController {
         String user_id = "", name = "", genre = "", text="";
 
         if ((publicationId != null) && (publicationId.matches("\\d+"))) {
-            //model.addAttribute("publicationId",publicationId);
+            model.addAttribute("publicationId",publicationId);
             Publications publication = publicationsService.get(Integer.parseInt(publicationId));
             if (publication != null){
                 name = publication.getName();
@@ -45,7 +45,7 @@ public class PublicationsController {
     }
 
     @RequestMapping(value="/publications",method = RequestMethod.POST)
-    public ModelAndView showPublications(@RequestParam(name="id", required = false) String publicationId,
+    public ModelAndView actionsWithPublications(@RequestParam(name="publicationId", required = false) String publicationId,
                                          @RequestParam(name="name", required = false) String name,
                                          @RequestParam(name="genre", required = false) String genre,
                                          @RequestParam(name="text", required = false) String text,

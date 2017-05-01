@@ -37,21 +37,19 @@ public class RegistrationServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String hash_pass = null;
-        try {
-             hash_pass = PasswordStorage.createHash(password);
-        }catch(PasswordStorage.CannotPerformOperationException e){
-            e.printStackTrace();
-        }
-        LOGGER.debug("userstr " + login + password);
-
-        LOGGER.debug("user " + login + password);
        // Logger.getLogger(RegistrationServlet.class.getName()).log(Level.DEBUG, "user " + login + password);
 
         LOGGER.debug("user " + firstName + secondName + lastName);
+
         if(firstName=="" && secondName=="" && lastName=="" &&
                 login=="" && password=="") {
             resp.sendRedirect(req.getContextPath() + "/Registration");
         }else{
+            try {
+                hash_pass = PasswordStorage.createHash(password);
+            }catch(PasswordStorage.CannotPerformOperationException e){
+                e.printStackTrace();
+            }
             userService.insert(login,hash_pass);
             usersInformationService.insert(firstName,secondName,lastName);
             resp.sendRedirect(req.getContextPath() + "/");

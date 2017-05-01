@@ -13,14 +13,14 @@ import java.util.List;
  */
 @Service
 public class PublicationsService implements PublicationsServiceInterface {
-    private static PublicationsDao publicationsDao = new PublicationsDaoImpl();
+    private PublicationsDao publicationsDao;
 
-    public static PublicationsDao getPublicationsDao() {
+    public PublicationsDao getPublicationsDao() {
         return publicationsDao;
     }
 
-    public static void setPublicationsDao(PublicationsDao publicationsDao) {
-        PublicationsService.publicationsDao = publicationsDao;
+    public void setPublicationsDao(PublicationsDao publicationsDao) {
+        this.publicationsDao = publicationsDao;
     }
 
     public List<Publications> getAll() {

@@ -5,13 +5,24 @@ import main.model.connection.ManagementSystem;
 import main.model.dao.UsersInformationDao;
 import main.model.dao.UsersInformationDaoImpl;
 import main.model.pojo.UsersInformation;
+import org.springframework.stereotype.Service;
+
 /**
  * Created by admin on 19.04.2017.
  */
+@Service
 public class UsersInformationService implements UsersInformationInterface {
 
     //ManagementSystem managementSystem = new ManagementSystem();
-    public static UsersInformationDao usersInformationDao = new UsersInformationDaoImpl();
+    private  UsersInformationDao usersInformationDao;
+
+    public UsersInformationDao getUsersInformationDao() {
+        return usersInformationDao;
+    }
+
+    public void setUsersInformationDao(UsersInformationDao usersInformationDao) {
+        this.usersInformationDao = usersInformationDao;
+    }
 
     public  List<UsersInformation> getAll(){
         return usersInformationDao.getAll();

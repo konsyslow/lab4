@@ -13,14 +13,14 @@ import java.util.List;
  */
 @Service
 public class UserService implements UserServiceInterface {
-    private static UserDAO userDAO = new UserDAOImpl();
+    private UserDAO userDAO;
 
-    public static UserDAO getUserDAO() {
+    public UserDAO getUserDAO() {
         return userDAO;
     }
 
-    public static void setUserDAO(UserDAO userDAO) {
-        UserService.userDAO = userDAO;
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     public Users auth(String login, String password) {
@@ -34,10 +34,11 @@ public class UserService implements UserServiceInterface {
             try {
                 boolean b = PasswordStorage.verifyPassword(password, user.getPassword());
                 if(b==false){
-                    user = null;
+                    return null;
                 }
             }catch (Exception e){
                 e.printStackTrace();
+                return null;
             }
         }
        // logger.debug("user not blocked");

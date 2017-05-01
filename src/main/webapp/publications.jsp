@@ -14,7 +14,7 @@
 <h2><a href='logout.jsp'>Log out</a></h2>
 <body>
 <form method="post">
-    <input type="text" name="id" value="<%= request.getAttribute("id")%>" >id</input>
+    <input type="text" name="publicationId" value="<%= request.getAttribute("publicationId")%>" >id</input>
     <input type="text" name="name" value="<%= request.getAttribute("name")%>">name</input>
     <input type="text" name="genre" value="<%= request.getAttribute("genre") %>">genre</input>
     <input type="text" name="text" value="<%= request.getAttribute("text") %>">text</input>

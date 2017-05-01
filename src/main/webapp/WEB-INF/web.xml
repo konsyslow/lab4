@@ -13,20 +13,6 @@
     <servlet-name>Main</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>ReadingServlet</servlet-name>
-    <servlet-class>main.controllers.ReadingServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <display-name>RegistrationServlet</display-name>
-    <servlet-name>RegistrationServlet</servlet-name>
-    <servlet-class>main.controllers.RegistrationServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>ListServlet</servlet-name>
-    <servlet-class>main.controllers.ListController</servlet-class>
-  </servlet>
   <filter>
     <filter-name>WhiteFilter</filter-name>
     <filter-class>main.controllers.filters.WhiteList</filter-class>
@@ -54,18 +40,6 @@
     <filter-name>WhiteFilter</filter-name>
     <url-pattern>/listUsers</url-pattern>
   </filter-mapping>
-  <servlet-mapping>
-    <servlet-name>ReadingServlet</servlet-name>
-    <url-pattern>/reading</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>RegistrationServlet</servlet-name>
-    <url-pattern>/Registration</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>ListServlet</servlet-name>
-    <url-pattern>/listUsers</url-pattern>
-  </servlet-mapping>
   <resource-ref>
     <description>DB Connection</description>
     <res-ref-name>jdbc/StudentsDS</res-ref-name>
